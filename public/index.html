@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>泡麵價格商品網站</title>
+  <meta charset="UTF-8">
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+<body>
+<h1>泡麵價格商品網站</h1>
+
+<h2>輸入商品資訊</h2>
+<form id="productForm">
+  <label for="date">日期:</label>
+  <input type="date" id="date" required><br>
+
+  <label for="productName">商品名稱:</label>
+  <input type="text" id="productName" required><br>
+
+  <label for="price">商品價格:</label>
+  <input type="number" id="price" required><br>
+
+  <button type="submit">新增商品</button>
+</form>
+
+
+<h2>物價變化</h2>
+<table id="productTable">
+  <tr>
+    <th>日期</th>
+    <th>商品名稱</th>
+    <th>商品價格</th>
+  </tr>
+</table>
+
+<script>
+  // 商品資料
+  var products = [];
+
+  // 新增商品
+  document.getElementById('productForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    var date = document.getElementById('date').value;
+    var productName = document.getElementById('productName').value;
+    var price = document.getElementById('price').value;
+
+    var product = {
+      date: date,
+      name: productName,
+      price: price
+    };
+
+    products.push(product);
+
+    displayProducts();
+    clearForm();
+  });
+
+  // 清除輸入欄位
+  function clearForm() {
+    document.getElementById('date').value = '';
+    document.getElementById('productName').value = '';
+    document.getElementById('price').value = '';
+  }
+
+  // 顯示商品列表
+  function displayProducts() {
+    var table = document.getElementById('productTable');
+
+    // 清空表格內容
+    while (table.rows.length > 1) {
+      table.deleteRow(1);
+    }
+
+    // 填入新的商品資料
+    for (var i = 0; i < products.length; i++) {
+      var product = products[i];
+
+      var row = table.insertRow(-1);
+      var dateCell = row.insertCell(0);
+      var nameCell = row.insertCell(1);
+      var priceCell = row.insertCell(2);
+
+      dateCell.innerHTML = product.date;
+      nameCell.innerHTML = product.name;
+      priceCell.innerHTML = product.price;
+      // ...
+      var editCell = row.insertCell(3);
+      var deleteCell = row.insertCell(4);
+
+    }
+  }
+
+
+</script>
+</body>
+</html>
